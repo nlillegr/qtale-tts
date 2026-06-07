@@ -25,14 +25,20 @@ jobs:
 
       - name: Build ZIP
         run: |
-          cd ..
-          cp -r qtale-tts qtale-tts-clean
-          # Strip development-only files from the ZIP
-          cd qtale-tts-clean
-          rm -rf .git .github .gitignore LICENSE README.md *.bak* tests/ .phpunit*
-          cd ..
-          zip -r qtale-tts-${{ steps.ver.outputs.version }}.zip qtale-tts-clean -x "*.git*"
-          mv qtale-tts-${{ steps.ver.outputs.version }}.zip qtale-tts/
+          # WordPress.org requires the plugin folder inside the ZIP to be named
+          # exactly the plugin slug (qtale-tts), NOT "qtale-tts-clean" or any other name.
+          mkdir -p /tmp/build
+          cp -r . /tmp/build/qtale-tts
+          cd /tmp/build/qtale-tts
+          # Strip development-only files (not for end users)
+          rm -rf .git .github .gitignore LICENSE README.md WP-ORG-SUBMISSION.md tests/ .phpunit*
+          find . -name "*.bak*" -delete
+          find . -name "*.swp" -delete
+          find . -name ".DS_Store" -delete
+          find . -name "Thumbs.db" -delete
+          cd /tmp/build
+          zip -r qtale-tts-${{ steps.ver.outputs.version }}.zip qtale-tts/
+          mv qtale-tts-${{ steps.ver.outputs.version }}.zip $GITHUB_WORKSPACE/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
