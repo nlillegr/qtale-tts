@@ -1,0 +1,26 @@
+# Q-Tale TTS WordPress Plugin
+# https://github.com/<TO-BE-CREATED>/qtale-tts
+
+# ── OS / Editor ──
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# ── Build artifacts (ZIPs are built by GitHub Actions or portal builder) ──
+*.zip
+build/
+dist/
+
+# ── Composer / Node (om noe legges til senere) ──
+vendor/
+node_modules/
+
+# ── Local dev ──
+*.log
+.phpunit.result.cache
+
+# ── Legacy backup-filer ──
+*.bak
+*.bak-*
