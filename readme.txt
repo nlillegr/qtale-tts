@@ -76,6 +76,33 @@ Innstillinger → Q-Tale TTS → Standard stemme-ID. Du finner stemme-ID-er på 
 * Du kan når som helst slette genererte filer fra app.qtale.no.
 * Se [qtale.no/personvern](https://qtale.no/personvern) for full personvernerklæring.
 
+== External services ==
+
+This plugin connects to the Q-Tale TTS API (api.qtale.no) and CDN (qtale.no) to provide text-to-speech functionality. A Q-Tale subscription is required — sign up at [qtale.no](https://qtale.no/priser).
+
+**api.qtale.no** — Q-Tale TTS REST API
+
+* **What is sent:** Post content (only the text wrapped in the `[qtale]` shortcode or auto-generated), API key (X-API-Key header), voice and design preferences, language, and content hash for deduplication.
+* **When it is sent:** When a post containing the shortcode is rendered or saved (with auto-generation enabled), and when admin settings are configured (Cloud Storage credentials test/save).
+* **Why:** To generate or look up cached MP3 audio for the post.
+* **What is returned:** MP3 audio URL (or job ID for asynchronous generation), tier info, voice list, design list, translation results.
+* Operated by: ActiveWEB AS (Norway, org. nr. 982 259 428)
+* [Terms of Service](https://qtale.no/vilkar) · [Privacy Policy](https://qtale.no/personvern)
+
+**qtale.no (CDN)** — Player JavaScript
+
+* **What is sent:** Standard HTTP request (browser User-Agent, IP for CDN routing) when the visitor's browser loads the player script.
+* **When it is sent:** When a page containing a Q-Tale player is rendered in a visitor's browser.
+* **Why:** To deliver the embed-player.js file (Q-Tale's player frontend) and serve MP3 audio.
+* Operated by: ActiveWEB AS (Norway, org. nr. 982 259 428)
+
+**Cloud Storage backends** (optional, v2.6.25+) — Customer-owned external storage
+
+* **What is sent:** Older MP3 files (default: files older than 30 days), uploaded directly from Q-Tale's servers to your configured backend (FTP, SFTP, Amazon S3, Wasabi, Cloudflare R2, or Backblaze B2).
+* **When it is sent:** Daily cron job, only if you have configured a backend in Innstillinger → Q-Tale TTS → Cloud Storage.
+* **Why:** To offload older audio from Q-Tale's infrastructure to your own storage, freeing up your quota.
+* This is YOUR storage — you control where audio files end up. Q-Tale just hands them off via the credentials you provide.
+
 == Changelog ==
 
 = 2.6.25 =

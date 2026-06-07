@@ -1,0 +1,45 @@
+name: Build plugin ZIP
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags: v2.6.25, v2.7.0 etc.
+  workflow_dispatch:  # Allow manual run from Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from qtale-tts.php
+        id: ver
+        run: |
+          VER=$(grep -oP "Version:\s*\K[0-9.]+" qtale-tts.php)
+          echo "version=$VER" >> $GITHUB_OUTPUT
+          echo "Detected version: $VER"
+
+      - name: Build ZIP
+        run: |
+          cd ..
+          cp -r qtale-tts qtale-tts-clean
+          # Strip development-only files from the ZIP
+          cd qtale-tts-clean
+          rm -rf .git .github .gitignore LICENSE README.md *.bak* tests/ .phpunit*
+          cd ..
+          zip -r qtale-tts-${{ steps.ver.outputs.version }}.zip qtale-tts-clean -x "*.git*"
+          mv qtale-tts-${{ steps.ver.outputs.version }}.zip qtale-tts/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: qtale-tts-${{ steps.ver.outputs.version }}
+          path: qtale-tts-${{ steps.ver.outputs.version }}.zip
+
+      - name: Create release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: qtale-tts-${{ steps.ver.outputs.version }}.zip
+          generate_release_notes: true
