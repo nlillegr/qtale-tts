@@ -3,7 +3,7 @@
  * Plugin Name:       Q-Tale TTS
  * Plugin URI:        https://qtale.no/
  * Description:       Embed text-to-speech audio players in WordPress posts with the [qtale] shortcode. Norwegian focus with Sámi (Giellalt) support and 25+ languages. Requires a Q-Tale account — sign up at <a href="https://qtale.no/priser">qtale.no/priser</a>. Service by Nils Otto Lillegrein at <a href="https://activeweb.no">ActiveWEB AS</a>.
- * Version:           2.6.25
+ * Version:           2.6.26
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Nils Otto Lillegrein
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'QTALE_TTS_VERSION', '2.6.25' );
+define( 'QTALE_TTS_VERSION', '2.6.26' );
 define( 'QTALE_TTS_FILE', __FILE__ );
 define( 'QTALE_TTS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'QTALE_TTS_URL', plugin_dir_url( __FILE__ ) );

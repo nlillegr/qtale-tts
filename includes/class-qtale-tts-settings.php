@@ -30,7 +30,7 @@ class Qtale_TTS_Settings {
 	}
 
 	private static function admin_css() {
-		return <<<CSS
+		return "
 		.qtale-wrap{max-width:980px;margin:20px 0;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;}
 		/* WP admin notice — make readable against our hero/card background */
 		.qtale-wrap .notice,
@@ -102,7 +102,7 @@ class Qtale_TTS_Settings {
 			border:1px solid #cbd5e1;border-radius:8px;
 			padding:8px 36px 8px 12px;
 			background-color:#fff;
-			background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1l5 5 5-5' stroke='%23E85124' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+			background-image:url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1l5 5 5-5' stroke='%23E85124' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>\");
 			background-repeat:no-repeat;
 			background-position:right 12px center;
 			background-size:11px;
@@ -160,7 +160,7 @@ class Qtale_TTS_Settings {
 			.qtale-shortcode-table code{background:rgba(232,81,36,.12);color:#ff8a5c;}
 			.qtale-margin-grid label{color:#94a3b8;}
 		}
-CSS;
+";
 	}
 
 	public static function menu() {

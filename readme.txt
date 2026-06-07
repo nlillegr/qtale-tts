@@ -4,7 +4,7 @@ Tags: text-to-speech, tts, accessibility, audio, podcast
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.6.25
+Stable tag: 2.6.26
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,9 @@ This plugin connects to the Q-Tale TTS API (api.qtale.no) and CDN (qtale.no) to 
 * This is YOUR storage — you control where audio files end up. Q-Tale just hands them off via the credentials you provide.
 
 == Changelog ==
+
+= 2.6.26 =
+* Compatibility: replaced heredoc syntax with regular string concatenation in admin CSS helper (required by WordPress.org automated plugin scan).
 
 = 2.6.25 =
 * **Nytt — Cloud Storage offload:** flytt eldre MP3-filer (norske stemmer) til din egen FTP, SFTP, Amazon S3 (EU-soner inkl. Frankfurt/Stockholm/Paris), Wasabi, Cloudflare R2 eller Backblaze B2. Konfigurer fra Innstillinger → Q-Tale TTS → Cloud Storage. Velg backend, fyll inn legitimasjon, sett alders-grense (default 30 dager) og URL-base. Test-tilkobling-knapp validerer creds før lagring. Daglig cron flytter automatisk filer fra Q-Tales infrastruktur til din egen lagring; tidligere lyd-URL-er oppdateres transparent. Frigjør Q-Tale-kvoten din og gir full kontroll over arkivet. Legitimasjon krypteres i Q-Tales DB med Fernet-kryptering.
