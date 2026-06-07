@@ -1,80 +1,95 @@
 === Q-Tale TTS ===
-Contributors: qtale, activeweb
-Tags: text-to-speech, tts, accessibility, audio, podcast, voice, narration, norsk, ai
+Contributors: nlillegr
+Tags: text-to-speech, tts, accessibility, audio, podcast
 Requires at least: 5.8
-Tested up to: 6.4
+Tested up to: 6.7
 Requires PHP: 7.4
 Stable tag: 2.6.25
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Profesjonell norsk talesyntese for WordPress — Q-Tale-spilleren i 13 designs, 25+ språk, server-side caching.
+Embed text-to-speech audio players in WordPress posts. Norwegian focus with Sámi (Giellalt) support. A service by ActiveWEB AS, Norway.
 
 == Description ==
 
-Q-Tale TTS gjør innleggene dine om til talesyntese-lyd med ett klikk. Bruk shortcoden `[qtale]` eller la pluginen auto-generere når du publiserer.
+Q-Tale TTS lets you turn the text in your WordPress posts into spoken audio that visitors can listen to while reading. Insert the `[qtale]` shortcode in a post, or enable auto-generation, and the plugin requests synthesized speech from the Q-Tale TTS service and embeds an audio player on the page.
 
-**Funksjoner:**
+Built and operated by **Nils Otto Lillegrein** (ActiveWEB AS & qtale.no, Norwegian organisation number 982 259 428, based in Hyggen, Norway). Support and questions: **mail@qtale.no**. The plugin is designed for Norwegian publishers, accessibility-focused websites, and editors who need professional-quality narration without managing text-to-speech infrastructure themselves.
 
-* 13 spiller-designs (Odin, Tor, Frigg, Baldr, Idunn, Beaivi, og 7 flere)
-* Norsk premium AI-tale + 25 språk via Q-Tale (Azure + ElevenLabs)
-* Server-side audio-caching i WordPress transients (1-365 dagers TTL)
-* Auto-generering ved publisering (valgfritt)
-* Kostnadskontroll: maks tegn per post, daglig grense, tier-baserte begrensninger
-* Lys / mørk / auto-tema som matcher temaet ditt
-* Kun for innlogga brukere (valgfritt)
-* Innholdstype-velger (poster, sider, custom post types)
-* Embedder qtale-player.js fra qtale.no CDN — alltid nyeste versjon
+**Key features**
 
-**Krever et Q-Tale-abonnement** på app.qtale.no for å fungere. Bestill prøveperiode på [qtale.no](https://qtale.no/).
+* Multiple player designs configured from your Q-Tale dashboard (Norse-mythology themed)
+* 25+ languages — Norwegian Bokmål, Sámi (via Giellalt/Divvun, only WordPress plugin with this), and 23 other European languages
+* Per-device player sizing (separate desktop / tablet / mobile dimensions)
+* Server-side audio caching — generated MP3s are cached so identical text is never re-billed
+* Optional auto-generation on post publish (with cost controls per-post and per-day)
+* Optional Cloud Storage offload — push older MP3 files to your own FTP, SFTP, Amazon S3 (EU regions), Wasabi, Cloudflare R2, or Backblaze B2 backend
+* Light / dark / auto theming
+* Logged-in-only mode for membership sites
+* Custom post type support
+
+**A Q-Tale account is required.** This plugin is a WordPress integration for the Q-Tale TTS service operated by ActiveWEB AS. Sign up for a free trial at [qtale.no/priser](https://qtale.no/priser).
+
+**Why a paid service?** High-quality text-to-speech with multiple voices runs on compute that costs money per character. The Q-Tale service handles voice infrastructure (Piper, Kokoro, Azure Neural, Giellalt for Sámi), per-customer quota tracking, MP3 caching, and content delivery. This WordPress plugin is GPL and free; it talks to that service over a REST API using your account's API key.
+
+**Open source.** The plugin source code is openly available on GitHub at [github.com/nlillegr/qtale-tts](https://github.com/nlillegr/qtale-tts) for review, audit, and contributions.
 
 == Installation ==
 
-1. Last ned ZIP-en fra appen din på app.qtale.no — den kommer ferdig konfigurert med din API-nøkkel og tier-baserte standardvalg.
-2. WordPress Admin → Plugins → Last opp Plugin → Velg ZIP-fil → Installer → Aktiver.
-3. Innstillinger → Q-Tale TTS for å justere designs, atferd og kostnadsgrenser.
-4. Skriv `[qtale]Velkommen til siden min[/qtale]` i et innlegg, eller skru på Auto-generer i innstillingene.
+1. Sign up for a Q-Tale account at [qtale.no/priser](https://qtale.no/priser) and copy your API key from the dashboard (a free trial is available).
+2. Download the plugin ZIP from your Q-Tale dashboard (pre-configured with your API key), or from [github.com/nlillegr/qtale-tts/releases](https://github.com/nlillegr/qtale-tts/releases) (manually configure the API key after activation).
+3. WordPress Admin → Plugins → Add New → Upload Plugin → choose the ZIP → Install → Activate.
+4. Settings → Q-Tale TTS to enter your API key (if not auto-configured) and adjust player design, behaviour, and cost limits.
+5. Insert `[qtale]Welcome to my site[/qtale]` in a post, or enable Auto-generate in settings to convert new posts automatically.
 
 == Frequently Asked Questions ==
 
-= Trenger jeg en konto hos Q-Tale? =
+= Do I need a Q-Tale account? =
 
-Ja. Pluginen genererer lyd via Q-Tales API (app.qtale.no). Du trenger en konto med en aktiv plan.
+Yes. The plugin generates audio via the Q-Tale API (api.qtale.no). You need a Q-Tale account with an active subscription (a free trial is available at qtale.no/priser).
 
-= Sendes innleggsinnholdet mitt til Q-Tale? =
+= Is my post content sent to Q-Tale's servers? =
 
-Ja — kun teksten som skal narrateres. Vi lagrer ikke innleggsinnholdet permanent. MP3-filen som genereres lagres hos Q-Tale så lenge abonnementet ditt er aktivt.
+Yes — only the text wrapped in the `[qtale]` shortcode or auto-generated for narration. The text is processed to generate an MP3 file, which is then cached and served back. Q-Tale does not retain post content as text after generation, only the resulting MP3 audio file (which stays linked to your account while your subscription is active).
 
-= Hvordan ser jeg hvor mange tegn jeg har brukt? =
+= How do I see my character usage and remaining quota? =
 
-Logg inn på app.qtale.no — dashboardet viser månedlig forbruk og resterende kvote.
+Log in to app.qtale.no — the dashboard shows monthly character usage, remaining quota, and per-post cost breakdown.
 
-= Kan jeg bruke pluginen uten å sende data til en ekstern server? =
+= Can I use the plugin without sending data to an external server? =
 
-Nei — Q-Tale genererer lyden i skyen. Lokal generering er ikke tilgjengelig.
+No. Q-Tale generates audio in the cloud. Local generation is not currently available. If you require fully on-premise text-to-speech, this plugin is not the right fit.
 
-= Fungerer pluginen med Gutenberg-blokker? =
+= Does this plugin work with Gutenberg blocks? =
 
-Ja — shortcoden `[qtale]` fungerer i alle blokk-typer som rendrer shortcodes (klassisk-blokk, gjenbrukbar shortcode-blokk, m.fl.).
+Yes. The `[qtale]` shortcode works in any block that renders shortcodes (Classic block, Shortcode block, reusable blocks, etc.).
 
-= Kan jeg endre standard stemme? =
+= How do I change the default voice? =
 
-Innstillinger → Q-Tale TTS → Standard stemme-ID. Du finner stemme-ID-er på app.qtale.no/voices.
+Settings → Q-Tale TTS → Default voice. You can also pick voices per-post via the post editor metabox. The full voice list is at app.qtale.no/voices.
+
+= Is the plugin source code available? =
+
+Yes. The plugin is GPL-2.0-or-later and the full source code is on GitHub at [github.com/nlillegr/qtale-tts](https://github.com/nlillegr/qtale-tts). Issues and pull requests are welcome.
+
+= Who do I contact for support? =
+
+Email **mail@qtale.no** for support, billing questions, or feature requests. Q-Tale subscribers also have access to the support dashboard at app.qtale.no.
 
 == Screenshots ==
 
-1. Hovedinnstillingssiden — Q-Tale-merket Pro design.
-2. Spiller-design-velger med 13 alternativer (tilgjengelige avhenger av pakke).
-3. Auto-generer + atferdsinnstillinger.
-4. Eksempel på spiller embedded i et innlegg (Odin-design).
+1. Plugin settings page — pick player design, default voice, and behaviour.
+2. Player design picker — multiple designs available depending on your subscription tier.
+3. Auto-generation and per-post cost-limit settings.
+4. Example embedded player in a published post.
 
 == Privacy ==
 
-* Pluginen sender innleggstekst (kun det som rendres via shortcoden eller auto-genereres) til Q-Tales API på app.qtale.no.
-* Spilleren (qtale-player.js) lastes fra qtale.no CDN.
-* MP3-filer lagres på Q-Tales infrastruktur og leveres via signerte URL-er.
-* Du kan når som helst slette genererte filer fra app.qtale.no.
-* Se [qtale.no/personvern](https://qtale.no/personvern) for full personvernerklæring.
+* The plugin sends post text (only the content wrapped in the `[qtale]` shortcode or auto-generated) to the Q-Tale API at api.qtale.no.
+* The player JavaScript (`qtale-player.js`) is loaded from qtale.no CDN by site visitors.
+* MP3 files are stored on Q-Tale's infrastructure and served via signed URLs (or to your own Cloud Storage backend if you have configured one).
+* You can delete generated files at any time from app.qtale.no.
+* See [qtale.no/personvern](https://qtale.no/personvern) for the full privacy policy in Norwegian, or [qtale.no/privacy](https://qtale.no/privacy) for English.
 
 == External services ==
 
