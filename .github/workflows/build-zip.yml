@@ -6,6 +6,9 @@ on:
       - 'v*.*.*'  # Triggers on version tags: v2.6.25, v2.7.0 etc.
   workflow_dispatch:  # Allow manual run from Actions tab
 
+permissions:
+  contents: write  # Needed for softprops/action-gh-release to create releases + upload assets
+
 jobs:
   build:
     runs-on: ubuntu-latest
