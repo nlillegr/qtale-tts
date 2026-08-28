@@ -4,7 +4,7 @@ Tags: text-to-speech, tts, accessibility, audio, podcast
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,13 @@ This plugin connects to the Q-Tale TTS API (api.qtale.no) and CDN (qtale.no) to 
 * This is YOUR storage — you control where audio files end up. Q-Tale just hands them off via the credentials you provide.
 
 == Changelog ==
+
+= 2.7.1 =
+* **Standard stemme er nå Azure Finn** (`nb-NO-FinnNeural`). Feltet var tomt fra før, noe som tvang serveren til å gjette.
+* **Player-marg default endret til 0/0/35/0** (topp/høyre/bunn/venstre). Etter praktisk bruk: spilleren trenger luft *under* seg mot brødteksten, ikke over — 12px topp dyttet den unødig ned fra tittelen.
+* **Innstillingssiden er ryddet opp.** Hjelpetekster lå limt inntil feltene; nå har hver rad tydelig skillelinje, hjelpeteksten står med luft under feltet, radene lyser opp når du holder musa over, og tekniske felt (API-URL, stemme-ID) vises med fast bredde-font. Gjelder både lyst og mørkt tema.
+* **Tilkoblingsfeil er nå på norsk og sier hva du skal gjøre.** «FTP-feil: timed out» ble til «FTP Feil: Tidsavbrudd — serveren svarte ikke. Står verten som et domenenavn bak Cloudflare? Cloudflare proxyer ikke FTP; bruk serverens IP-adresse.» Tilsvarende for DNS-feil, avvist innlogging, manglende mappetilgang og nektet tilkobling.
+* Linjeskift i tre hjelpetekster som ble for lange på én linje.
 
 = 2.7.0 =
 * **Standardverdier justert etter langtidsdrift.** «Maks. tegn per auto-generering» går fra 3000 til 15000. Den gamle grensen kuttet nesten halvparten av artiklene hos en nyhetskunde midt i en setning, uten at det var synlig noe sted — feltet leste som en kvote, ikke som en saks. Feltet har nå en forklarende hjelpetekst. **Merk:** eksisterende installasjoner beholder sin lagrede verdi; sjekk Innstillinger → Atferd & restriksjoner hvis du fortsatt står på 3000.

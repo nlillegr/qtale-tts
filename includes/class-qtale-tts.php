@@ -136,7 +136,9 @@ class Qtale_TTS {
 			'api_base'          => 'https://api.qtale.no',
 			'app_base'          => 'https://app.qtale.no',
 			'cdn_base'          => 'https://qtale.no',
-			'default_voice'     => '',
+			// v2.7.1: Azure Finn som default (var tom). Tom verdi tvang serveren til å
+			// gjette, og norske kunder er den store majoriteten.
+			'default_voice'     => 'nb-NO-FinnNeural',
 			'default_design'    => 'odin',
 			'default_design_public_id' => '',  // tom = bruk legacy [qtale design=odin]-flow
 			'default_theme'     => 'auto',
@@ -163,9 +165,11 @@ class Qtale_TTS {
 			'daily_limit'       => 0,        // 0 = ubegrenset
 			'subscriber_only'   => 0,        // begrens player til innlogga brukere
 			// Player placement padding (px) — applies when auto-injected above/below content
-			'placement_margin_top'    => 12,
+			// v2.7.1: 0/0/35/0 etter praktisk bruk — playeren trenger luft UNDER seg
+			// (mot brødteksten), ikke over. 12px topp dyttet den unødig ned fra tittelen.
+			'placement_margin_top'    => 0,
 			'placement_margin_right'  => 0,
-			'placement_margin_bottom' => 18,
+			'placement_margin_bottom' => 35,
 			'placement_margin_left'   => 0,
 			// Tier (set automatically by /api/v1/me when API key is verified)
 			'tier_key'          => '',

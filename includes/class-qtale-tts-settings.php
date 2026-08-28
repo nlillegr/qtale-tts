@@ -88,8 +88,42 @@ class Qtale_TTS_Settings {
 			width:8px;height:8px;border-radius:50%;
 			background:linear-gradient(135deg,#E85124,#ff8a5c);box-shadow:0 0 8px rgba(232,81,36,.4);
 		}
-		.qtale-wrap .form-table th{font-weight:600;color:#334155;padding-left:0;}
-		.qtale-wrap .form-table td{padding:10px 0;}
+		/* ── Skjema-tabell (v2.7.1) ───────────────────────────────────────────
+		   Før: th/td uten skillelinjer og .description limt rett inntil feltet, så
+		   lange innstillingslister ble en vegg av tekst der det var uklart hvilken
+		   hjelpetekst som hørte til hvilket felt. Nå: én rad = én tydelig enhet. */
+		.qtale-wrap .form-table{border-collapse:separate;border-spacing:0;}
+		.qtale-wrap .form-table th{
+			font-weight:600;color:#334155;padding:16px 22px 16px 0;
+			vertical-align:top;line-height:1.45;width:230px;
+			border-bottom:1px solid #eef2f7;
+		}
+		.qtale-wrap .form-table td{
+			padding:12px 0 14px;vertical-align:top;
+			border-bottom:1px solid #eef2f7;
+		}
+		.qtale-wrap .form-table tr:last-child th,
+		.qtale-wrap .form-table tr:last-child td{border-bottom:none;}
+		/* Hover gjør det lett å følge en rad bortover på brede skjermer */
+		.qtale-wrap .form-table tr:hover th{color:#E85124;}
+		.qtale-wrap .form-table tr:hover th,
+		.qtale-wrap .form-table tr:hover td{background:#fffaf7;}
+		/* Luft mellom felt og hjelpetekst — hovedklagen på det gamle oppsettet */
+		.qtale-wrap .description{
+			display:block;margin:7px 0 0;max-width:62ch;
+			font-size:12.5px;line-height:1.55;color:#64748b;
+		}
+		/* Inline-varianten (står PÅ samme linje som feltet) trenger sideluft i stedet */
+		.qtale-wrap input + .description,
+		.qtale-wrap select + .description{display:inline-block;margin:0 0 0 12px;vertical-align:middle;}
+		.qtale-wrap .description code{
+			background:#f1f5f9;border-radius:4px;padding:1px 5px;font-size:12px;
+		}
+		/* Tekniske felt leses som verdier, ikke prosa */
+		.qtale-wrap input[name*='_base'],
+		.qtale-wrap input[name*='voice']{
+			font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+		}
 		.qtale-wrap input[type=text],
 		.qtale-wrap input[type=url],
 		.qtale-wrap input[type=password],
@@ -152,6 +186,11 @@ class Qtale_TTS_Settings {
 			.qtale-wrap select:hover{background-color:#1f1410;border-color:#ff8a5c;}
 			.qtale-wrap select:focus{background-color:#0b1220;}
 			.qtale-wrap .description{color:#94a3b8;}
+			.qtale-wrap .form-table th,
+			.qtale-wrap .form-table td{border-bottom-color:#1e293b;}
+			.qtale-wrap .form-table tr:hover th,
+			.qtale-wrap .form-table tr:hover td{background:rgba(232,81,36,.06);}
+			.qtale-wrap .description code{background:#0b1220;color:#cbd5e1;}
 			.qtale-checkboxes label{background:#0b1220;border-color:#1e293b;color:#cbd5e1;}
 			.qtale-checkboxes label:hover{background:#1f1410;border-color:#E85124;}
 			.qtale-shortcode-table th{background:#0b1220;color:#94a3b8;}
@@ -366,7 +405,8 @@ class Qtale_TTS_Settings {
 					echo '</select>';
 					printf(
 						'<p class="description">%s</p>',
-						esc_html__( 'Velg en av dine Studio-designs — overstyrer «Spiller-design (legacy)» og bruker det nye embed-systemet med flerspråk-velger.', 'qtale-tts' )
+						esc_html__( 'Velg en av dine Studio-designs — overstyrer «Spiller-design (legacy)» og bruker', 'qtale-tts' )
+						. '<br>' . esc_html__( 'det nye embed-systemet med flerspråk-velger.', 'qtale-tts' )
 					);
 				}
 				break;
@@ -430,7 +470,8 @@ class Qtale_TTS_Settings {
 				echo '</select>';
 				printf(
 					'<p class="description">%s</p>',
-					esc_html__( 'Språk på artiklene dine. Visitor-oversettelser bruker dette som start­punkt. Tomt = bruk WordPress-locale automatisk.', 'qtale-tts' )
+					esc_html__( 'Språk på artiklene dine. Visitor-oversettelser bruker dette som start­punkt.', 'qtale-tts' )
+					. '<br>' . esc_html__( 'Tomt = bruk WordPress-locale automatisk.', 'qtale-tts' )
 				);
 				break;
 			case 'cache_ttl_days':
@@ -1124,7 +1165,7 @@ class Qtale_TTS_Settings {
 						<th scope="row"><label for="qtale-cs-urlbase"><?php esc_html_e( 'Offentlig URL-base', 'qtale-tts' ); ?></label></th>
 						<td>
 							<input type="url" id="qtale-cs-urlbase" placeholder="https://dittsted.no/wp-content/uploads/qtale-mp3" style="width:520px;">
-							<p class="description"><?php esc_html_e( 'Hvor leserne henter filene. F.eks. https://dittsted.no/wp-content/uploads/qtale-mp3 for FTP til WP-uploads-mappen.', 'qtale-tts' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Hvor leserne henter filene. F.eks. https://dittsted.no/wp-content/uploads/qtale-mp3', 'qtale-tts' ); ?><br><?php esc_html_e( 'for FTP til WP-uploads-mappen.', 'qtale-tts' ); ?></p>
 						</td>
 					</tr>
 				</table>
