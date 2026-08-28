@@ -439,7 +439,7 @@ class Qtale_TTS_Settings {
 					'<span class="description">%3$s</span>',
 					esc_attr( $name ),
 					(int) $value,
-					esc_html__( 'Hvor lenge audio-URL-er bufres lokalt.', 'qtale-tts' )
+					esc_html__( 'Hvor lenge audio-URL-er bufres lokalt. Hold den LAVERE enn «Flytt filer eldre enn» i Cloud Storage — ellers kan en bufret URL peke på en fil som allerede er flyttet til arkivet, og leserne får 404.', 'qtale-tts' )
 				);
 				break;
 			case 'auto_generate':
@@ -480,12 +480,23 @@ class Qtale_TTS_Settings {
 				echo '</div>';
 				break;
 			case 'min_chars_auto':
-			case 'max_chars_auto':
 			case 'daily_limit':
 				printf(
 					'<input type="number" min="0" name="%1$s" value="%2$d" class="small-text" />',
 					esc_attr( $name ),
 					(int) $value
+				);
+				break;
+			case 'max_chars_auto':
+				// Egen case med hjelpetekst: uten den ser feltet ut som en kvote, ikke
+				// som en saks. Gammel default (3000) kuttet artikler midt i en setning
+				// uten at noen forsto hvorfor lyden stoppet for tidlig.
+				printf(
+					'<input type="number" min="100" max="50000" name="%1$s" value="%2$d" class="small-text" />'
+					. '<p class="description">%3$s</p>',
+					esc_attr( $name ),
+					(int) $value,
+					esc_html__( 'Lengre artikler KUTTES her — lyden stopper midt i teksten og «…» legges til. Sett den høyere enn din lengste artikkel. Maks 50 000.', 'qtale-tts' )
 				);
 				break;
 			case 'placement_margin':
@@ -1439,7 +1450,9 @@ class Qtale_TTS_Settings {
 			if ( ! $post ) continue;
 			// SHARED extraction — guarantees cache_key consistency
 			$text = Qtale_TTS::extract_post_text( $post );
-			if ( $text === '' || strlen( $text ) < $min_chars ) continue;
+			// mb_strlen: samme tegn-semantikk som auto-inject, ellers hopper backfill
+			// over andre artikler enn publiserings-hooken gjør.
+			if ( $text === '' || mb_strlen( $text ) < $min_chars ) continue;
 
 			foreach ( $langs as $lang ) {
 				foreach ( $genders as $gender ) {

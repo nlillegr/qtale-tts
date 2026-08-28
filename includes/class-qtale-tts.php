@@ -144,12 +144,21 @@ class Qtale_TTS {
 
 			'allowed_designs'   => array(),  // empty = all allowed
 			'tier_name'         => '',       // shown in admin UI as a friendly label
-			'cache_ttl_days'    => 30,
+			// 7 fra v2.7.0 (var 30). Cold-storage flytter lyd til kundens eget arkiv
+			// etter 30 dager og bytter audio_url. Med 30 dagers cache falt de to
+			// grensene sammen: en transient fornyet på dag 25 holdt den gamle
+			// qtale.no-URL-en til dag 55 — 25 dager med 404 for leserne etter at fila
+			// var flyttet. 7 dager kapper det verste vinduet; re-polling mot
+			// /api/v1/find-audio er billig og server-dedupet.
+			'cache_ttl_days'    => 7,
 			// behaviour — defaults til "auto over content" så plugin fungerer ut-av-boksen
 			'auto_generate'     => 1,        // 0 = manual via shortcode only, 1 = on publish
 			'placement'         => 'above',  // manual | above | below
 			'post_types'        => array( 'post' ),
-			'max_chars_auto'    => 3000,
+			// 15000 fra v2.7.0. Gammel default 3000 kuttet ~46 % av en nyhetskundes
+			// artikler midt i en setning, uten at noen så det: feltet heter «Maks. tegn
+			// per auto-generering» og ser ut som en kvote, ikke som en saks.
+			'max_chars_auto'    => 15000,
 			'min_chars_auto'    => 200,
 			'daily_limit'       => 0,        // 0 = ubegrenset
 			'subscriber_only'   => 0,        // begrens player til innlogga brukere
@@ -228,7 +237,11 @@ class Qtale_TTS {
 		if ( $raw === '' ) return '';
 		$s = self::settings();
 		$max = max( 100, (int) $s['max_chars_auto'] );
-		if ( strlen( $raw ) > $max ) $raw = mb_substr( $raw, 0, $max ) . '…';
+		// mb_strlen, IKKE strlen: strlen teller bytes mens mb_substr kutter tegn. På
+		// norsk er æ/ø/å/«/»/– 2-3 bytes, så byte-sjekken slo inn for tidlig — en tekst
+		// under grensen i tegn kunne få «…» hengt på uten at noe faktisk ble kuttet,
+		// og det forurenset både cache-nøkkelen og server-dedupen.
+		if ( mb_strlen( $raw ) > $max ) $raw = mb_substr( $raw, 0, $max ) . '…';
 		return $raw;
 	}
 

@@ -892,7 +892,7 @@ class Qtale_TTS_Shortcode {
 	private static function enqueue_embed_script( $settings ) {
 		$handle = 'qtale-embed-player';
 		if ( wp_script_is( $handle, 'enqueued' ) ) return;
-		$src = untrailingslashit( $settings['cdn_base'] ) . '/static/qtale-embed-player.js?v=2026060704';
+		$src = untrailingslashit( $settings['cdn_base'] ) . '/static/qtale-embed-player.js?v=20260617';
 		wp_enqueue_script( $handle, $src, array(), QTALE_TTS_VERSION, true );
 	}
 
@@ -956,7 +956,9 @@ class Qtale_TTS_Shortcode {
 		if ( $text === '' ) {
 			return self::error_box( __( 'Q-Tale: ingen tekst angitt for shortcode.', 'qtale-tts' ) );
 		}
-		if ( strlen( $text ) > 5000 ) {
+		// mb_strlen: feilmeldingen under sier «tegn», så den MÅ måle tegn. Med strlen
+		// ble norsk tekst på ~4700 tegn avvist med påstand om at den var over 5000.
+		if ( mb_strlen( $text ) > 5000 ) {
 			return self::error_box( __( 'Q-Tale: shortcode-tekst > 5000 tegn (bruk Generator i portalen for lengre).', 'qtale-tts' ) );
 		}
 		if ( $settings['api_key'] === '' ) {
@@ -1167,7 +1169,7 @@ add_action( 'qtale_embed_gen_lang', function ( $design_id, $post_id, $text, $sou
 	set_transient( $cache_key, array(
 		'job_id'           => $job_id,
 		'voice'            => $voice,
-		'translated_chars' => strlen( $translated ),
+		'translated_chars' => mb_strlen( $translated ),  // feltet heter chars, ikke bytes
 		'submitted_at'     => time(),
 		'pending'          => true,
 	), $ttl );

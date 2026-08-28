@@ -161,7 +161,8 @@ class Qtale_TTS_Auto {
 		// Auto-inject additionally enforces min_chars_auto (skip too-short posts)
 		$s = Qtale_TTS::settings();
 		$min = max( 0, (int) $s['min_chars_auto'] );
-		if ( strlen( $text ) < $min ) return '';
+		// mb_strlen: min-grensen er i TEGN (se class-qtale-tts.php::extract_post_text)
+		if ( mb_strlen( $text ) < $min ) return '';
 		return $text;
 	}
 

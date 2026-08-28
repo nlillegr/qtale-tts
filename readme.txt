@@ -4,7 +4,7 @@ Tags: text-to-speech, tts, accessibility, audio, podcast
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.6.26
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,15 @@ This plugin connects to the Q-Tale TTS API (api.qtale.no) and CDN (qtale.no) to 
 * This is YOUR storage — you control where audio files end up. Q-Tale just hands them off via the credentials you provide.
 
 == Changelog ==
+
+= 2.7.0 =
+* **Standardverdier justert etter langtidsdrift.** «Maks. tegn per auto-generering» går fra 3000 til 15000. Den gamle grensen kuttet nesten halvparten av artiklene hos en nyhetskunde midt i en setning, uten at det var synlig noe sted — feltet leste som en kvote, ikke som en saks. Feltet har nå en forklarende hjelpetekst. **Merk:** eksisterende installasjoner beholder sin lagrede verdi; sjekk Innstillinger → Atferd & restriksjoner hvis du fortsatt står på 3000.
+* **Cache-levetid går fra 30 til 7 dager.** Den falt tidligere sammen med Cloud Storage sin 30-dagers offload, slik at en bufret lyd-URL kunne peke på en fil som allerede var flyttet til arkivet — 404 for leserne. Hjelpeteksten sier nå at cachen må være lavere enn offload-grensen.
+* **Fikset: tegn kontra bytes.** Grensene for maks/min tegn, shortcode-grensen på 5000 og feltet `translated_chars` telte bytes i stedet for tegn. På norsk er æ, ø og å to bytes, så tekster ble kuttet eller avvist for tidlig — og en tekst under grensen kunne få «…» hengt på uten at noe faktisk var kuttet. Alle bruker nå `mb_strlen`.
+* **Fikset: gamle sikkerhetskopier fulgte med i nedlastingen.** Tre `.php.bak-bug1`-filer lå i hver plugin-ZIP siden mai. Uten `.php`-endelse serveres slike filer som ren tekst, altså kildekode-eksponering på nettstedet. Filene er fjernet og bygge-filteret fanger nå alle sikkerhetskopi-varianter.
+
+= 2.6.27 =
+* **Q-Tools Print & PDF — ren artikkel:** utility-barens Print- og PDF-knapper bruker nå ren artikkel-tekst (samme innhold som Q-Text-lesemodalen) i stedet for å gjengi hele nettsiden. Print åpner en printervennlig, frittstående versjon (branded topp/bunn, kun artikkelen — ingen meny/sidefelt/annonser). PDF lager en branded ren-artikkel-PDF via /api/pdf-html. Faller tilbake til tidligere oppførsel dersom ren artikkel ikke kan hentes.
 
 = 2.6.26 =
 * Compatibility: replaced heredoc syntax with regular string concatenation in admin CSS helper (required by WordPress.org automated plugin scan).
