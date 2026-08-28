@@ -94,13 +94,30 @@ class Qtale_TTS_Settings {
 		   hjelpetekst som hørte til hvilket felt. Nå: én rad = én tydelig enhet. */
 		.qtale-wrap .form-table{border-collapse:separate;border-spacing:0;}
 		.qtale-wrap .form-table th{
-			font-weight:600;color:#334155;padding:16px 22px 16px 0;
+			font-weight:600;color:#334155;padding:16px 30px 16px 0;
 			vertical-align:top;line-height:1.45;width:230px;
 			border-bottom:1px solid #eef2f7;
 		}
 		.qtale-wrap .form-table td{
-			padding:12px 0 14px;vertical-align:top;
+			padding:14px 0 16px;vertical-align:top;
 			border-bottom:1px solid #eef2f7;
+		}
+		/* Små felt (tall/checkbox) så tett på etiketten at de leste som én klump.
+		   Litt luft foran gjør at øyet skiller etikett fra verdi. */
+		.qtale-wrap .form-table td > input[type=number],
+		.qtale-wrap .form-table td > input[type=text],
+		.qtale-wrap .form-table td > input[type=url],
+		.qtale-wrap .form-table td > input[type=password],
+		.qtale-wrap .form-table td > select,
+		.qtale-wrap .form-table td > label{margin-top:2px;}
+		.qtale-wrap .form-table td > label > input[type=checkbox]{margin-right:8px;}
+		/* WP stabler tabellen under 783px — da forsvinner kolonneluften helt,
+		   og etiketten limes rett oppå feltet. Gi vertikal luft i stedet. */
+		@media screen and (max-width:782px){
+			.qtale-wrap .form-table th{
+				padding:16px 0 8px;width:auto;border-bottom:none;
+			}
+			.qtale-wrap .form-table td{padding:0 0 16px;}
 		}
 		.qtale-wrap .form-table tr:last-child th,
 		.qtale-wrap .form-table tr:last-child td{border-bottom:none;}

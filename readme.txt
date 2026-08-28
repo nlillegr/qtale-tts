@@ -4,7 +4,7 @@ Tags: text-to-speech, tts, accessibility, audio, podcast
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.7.1
+Stable tag: 2.7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,9 @@ This plugin connects to the Q-Tale TTS API (api.qtale.no) and CDN (qtale.no) to 
 * This is YOUR storage — you control where audio files end up. Q-Tale just hands them off via the credentials you provide.
 
 == Changelog ==
+
+= 2.7.2 =
+* **Luft foran innstillingsfeltene.** Tallfeltene (min./maks. tegn, daglig grense) og avkryssingsboksene lå så tett på etiketten at de leste som én klump. Nå er det tydelig avstand mellom etikett og verdi — og på smale skjermer, der WordPress stabler tabellen og kolonneluften forsvinner helt, får de vertikal luft i stedet.
 
 = 2.7.1 =
 * **Standard stemme er nå Azure Finn** (`nb-NO-FinnNeural`). Feltet var tomt fra før, noe som tvang serveren til å gjette.
