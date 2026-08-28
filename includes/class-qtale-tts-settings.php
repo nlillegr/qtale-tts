@@ -76,70 +76,102 @@ class Qtale_TTS_Settings {
 			background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.4);
 			color:#93c5fd;font-size:11px;font-weight:600;margin-left:8px;
 		}
+		/* Kortet (v2.7.3): tynn merkevare-stripe langs toppkanten gir sidene
+		   identitet uten å ta plass, og løfter kortet fra «WP-grå boks» til noe
+		   som ser bygget ut. Stripen ligger i ::before slik at border-radius
+		   fortsatt klipper den pent. */
 		.qtale-card{
-			background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px 26px;margin:0 0 18px;
-			box-shadow:0 1px 3px rgba(0,0,0,.04);
+			position:relative;overflow:hidden;
+			background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px 28px;margin:0 0 20px;
+			box-shadow:0 1px 3px rgba(15,23,42,.05),0 8px 24px -12px rgba(15,23,42,.10);
+			transition:box-shadow .18s ease;
+		}
+		.qtale-card:hover{box-shadow:0 1px 3px rgba(15,23,42,.06),0 14px 34px -14px rgba(15,23,42,.16);}
+		.qtale-card::before{
+			content:'';position:absolute;top:0;left:0;right:0;height:3px;
+			background:linear-gradient(90deg,#E85124,#ff8a5c 45%,#ffd0bd);
 		}
 		.qtale-card h2{
-			margin:0 0 16px;padding:0 0 12px;border-bottom:1px solid #f1f5f9;
-			font-size:16px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:8px;
+			margin:2px 0 18px;padding:0 0 14px;border-bottom:1px solid #f1f5f9;
+			font-size:16px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:10px;
+			letter-spacing:-.01em;
 		}
 		.qtale-card h2 .qt-dot{
-			width:8px;height:8px;border-radius:50%;
-			background:linear-gradient(135deg,#E85124,#ff8a5c);box-shadow:0 0 8px rgba(232,81,36,.4);
+			width:8px;height:8px;border-radius:50%;flex:none;
+			background:linear-gradient(135deg,#E85124,#ff8a5c);box-shadow:0 0 0 4px rgba(232,81,36,.10);
 		}
-		/* ── Skjema-tabell (v2.7.1) ───────────────────────────────────────────
-		   Før: th/td uten skillelinjer og .description limt rett inntil feltet, så
-		   lange innstillingslister ble en vegg av tekst der det var uklart hvilken
-		   hjelpetekst som hørte til hvilket felt. Nå: én rad = én tydelig enhet. */
+		/* ── Skjema-tabell (v2.7.3) ───────────────────────────────────────────
+		   Utgangspunktet var ryddig, men tre ting gjorde det urolig å lese:
+		   hjelpetekster som noen ganger sto under feltet og andre ganger til høyre,
+		   feltbredder som spriket fra 80px til 25em uten felles kant, og en for smal
+		   etikettkolonne der lange etiketter brakk i to. Her er alt tre rettet. */
 		.qtale-wrap .form-table{border-collapse:separate;border-spacing:0;}
 		.qtale-wrap .form-table th{
-			font-weight:600;color:#334155;padding:16px 30px 16px 0;
-			vertical-align:top;line-height:1.45;width:230px;
-			border-bottom:1px solid #eef2f7;
+			font-weight:600;color:#334155;padding:18px 32px 18px 0;
+			vertical-align:top;line-height:1.45;width:255px;
+			border-bottom:1px solid #eef2f7;font-size:13px;
 		}
 		.qtale-wrap .form-table td{
-			padding:14px 0 16px;vertical-align:top;
+			padding:16px 0 18px;vertical-align:top;
 			border-bottom:1px solid #eef2f7;
 		}
-		/* Små felt (tall/checkbox) så tett på etiketten at de leste som én klump.
-		   Litt luft foran gjør at øyet skiller etikett fra verdi. */
-		.qtale-wrap .form-table td > input[type=number],
-		.qtale-wrap .form-table td > input[type=text],
-		.qtale-wrap .form-table td > input[type=url],
-		.qtale-wrap .form-table td > input[type=password],
-		.qtale-wrap .form-table td > select,
-		.qtale-wrap .form-table td > label{margin-top:2px;}
-		.qtale-wrap .form-table td > label > input[type=checkbox]{margin-right:8px;}
-		/* WP stabler tabellen under 783px — da forsvinner kolonneluften helt,
-		   og etiketten limes rett oppå feltet. Gi vertikal luft i stedet. */
+		.qtale-wrap .form-table tr:last-child th,
+		.qtale-wrap .form-table tr:last-child td{border-bottom:none;}
+		.qtale-wrap .form-table tr:hover th{color:#E85124;}
+		.qtale-wrap .form-table tr:hover th,
+		.qtale-wrap .form-table tr:hover td{background:#fffaf7;}
+
+		/* Felles høyrekant: alle brede felt slutter på samme x uansett WP-ens
+		   inline width. Uten dette ble kolonnen ujevn og rotete. */
+		.qtale-wrap .form-table td input[type=text],
+		.qtale-wrap .form-table td input[type=url],
+		.qtale-wrap .form-table td input[type=password]{
+			width:100% !important;max-width:400px;box-sizing:border-box;
+		}
+		/* Tallfelt: 80px var for trangt for «15000». Egen bredde, samme venstrekant. */
+		.qtale-wrap .form-table td input[type=number]{
+			width:112px !important;text-align:center;font-variant-numeric:tabular-nums;
+			font-weight:600;color:#0f172a;
+		}
+		/* Knapp rett etter et felt (f.eks. «Test nøkkel») trenger luft, ellers
+		   ser den ut som en del av input-en. */
+		.qtale-wrap .form-table td input + .button,
+		.qtale-wrap .form-table td input + button{margin-left:10px;}
+
+		/* Hjelpetekst ALLTID under feltet — aldri til siden. Konsistens er det som
+		   får en lang innstillingsliste til å føles rolig. */
+		.qtale-wrap .description{
+			display:block;margin:9px 0 0;max-width:60ch;
+			font-size:12.5px;line-height:1.55;color:#64748b;
+		}
+		.qtale-wrap .description code{
+			background:#f1f5f9;border-radius:4px;padding:1px 5px;font-size:12px;
+		}
+		/* Avanserte felt skal ikke rope like høyt som API-nøkkelen */
+		.qtale-wrap .form-table tr:has(input[name*='_base']) th{
+			font-weight:500;color:#64748b;
+		}
+		.qtale-wrap input[name*='_base'],
+		.qtale-wrap input[name*='voice']{
+			font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+		}
+		/* Checkbox-rader: teksten er selve innstillingen, ikke en etikett */
+		.qtale-wrap .form-table td > label{
+			display:inline-flex;align-items:center;gap:9px;
+			color:#334155;line-height:1.5;
+		}
+		.qtale-wrap .form-table td > label > input[type=checkbox]{margin:0;}
+
+		/* WP stabler tabellen under 783px — da forsvinner kolonneluften helt.
+		   Vertikal luft i stedet, ellers limes etiketten rett oppå feltet. */
 		@media screen and (max-width:782px){
 			.qtale-wrap .form-table th{
 				padding:16px 0 8px;width:auto;border-bottom:none;
 			}
-			.qtale-wrap .form-table td{padding:0 0 16px;}
-		}
-		.qtale-wrap .form-table tr:last-child th,
-		.qtale-wrap .form-table tr:last-child td{border-bottom:none;}
-		/* Hover gjør det lett å følge en rad bortover på brede skjermer */
-		.qtale-wrap .form-table tr:hover th{color:#E85124;}
-		.qtale-wrap .form-table tr:hover th,
-		.qtale-wrap .form-table tr:hover td{background:#fffaf7;}
-		/* Luft mellom felt og hjelpetekst — hovedklagen på det gamle oppsettet */
-		.qtale-wrap .description{
-			display:block;margin:7px 0 0;max-width:62ch;
-			font-size:12.5px;line-height:1.55;color:#64748b;
-		}
-		/* Inline-varianten (står PÅ samme linje som feltet) trenger sideluft i stedet */
-		.qtale-wrap input + .description,
-		.qtale-wrap select + .description{display:inline-block;margin:0 0 0 12px;vertical-align:middle;}
-		.qtale-wrap .description code{
-			background:#f1f5f9;border-radius:4px;padding:1px 5px;font-size:12px;
-		}
-		/* Tekniske felt leses som verdier, ikke prosa */
-		.qtale-wrap input[name*='_base'],
-		.qtale-wrap input[name*='voice']{
-			font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+			.qtale-wrap .form-table td{padding:0 0 18px;}
+			.qtale-wrap .form-table td input[type=text],
+			.qtale-wrap .form-table td input[type=url],
+			.qtale-wrap .form-table td input[type=password]{max-width:100%;}
 		}
 		.qtale-wrap input[type=text],
 		.qtale-wrap input[type=url],
@@ -189,7 +221,9 @@ class Qtale_TTS_Settings {
 		.qtale-margin-grid input{width:100%;text-align:center;}
 		/* Dark mode — auto-switch when browser/OS prefers dark */
 		@media (prefers-color-scheme: dark){
-			.qtale-wrap .qtale-card{background:#0f172a;border-color:#1e293b;color:#cbd5e1;}
+			.qtale-wrap .qtale-card{background:#0f172a;border-color:#1e293b;color:#cbd5e1;
+				box-shadow:0 1px 3px rgba(0,0,0,.4);}
+			.qtale-wrap .qtale-card:hover{box-shadow:0 1px 3px rgba(0,0,0,.5),0 14px 34px -14px rgba(0,0,0,.6);}
 			.qtale-wrap .qtale-card h2{color:#f1f5f9;border-bottom-color:#1e293b;}
 			.qtale-wrap .form-table th{color:#94a3b8;}
 			.qtale-wrap .form-table td{color:#cbd5e1;}

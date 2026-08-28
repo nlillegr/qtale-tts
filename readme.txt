@@ -4,7 +4,7 @@ Tags: text-to-speech, tts, accessibility, audio, podcast
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.7.2
+Stable tag: 2.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,9 @@ This plugin connects to the Q-Tale TTS API (api.qtale.no) and CDN (qtale.no) to 
 * This is YOUR storage — you control where audio files end up. Q-Tale just hands them off via the credentials you provide.
 
 == Changelog ==
+
+= 2.7.3 =
+* **Innstillingssiden er designet ordentlig.** Hjelpetekstene sto tilfeldig — noen under feltet, andre til høyre; nå står de alltid under. Feltbreddene spriket fra 80px til 25em uten felles kant; nå deler alle brede felt samme høyrekant og tallfeltene samme bredde. Etikettkolonnen er utvidet så «Maks. tegn per auto-generering» og «Daglig grense» ikke lenger brekker i to linjer. Avanserte felt (API-URL, CDN-URL) er visuelt dempet så de ikke roper like høyt som API-nøkkelen. Kortene har fått en tynn merkevare-stripe langs toppen og mykere dybde. Alt speilet i mørkt tema.
 
 = 2.7.2 =
 * **Luft foran innstillingsfeltene.** Tallfeltene (min./maks. tegn, daglig grense) og avkryssingsboksene lå så tett på etiketten at de leste som én klump. Nå er det tydelig avstand mellom etikett og verdi — og på smale skjermer, der WordPress stabler tabellen og kolonneluften forsvinner helt, får de vertikal luft i stedet.
